@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style type="text/css">
+        body {
+            background-color: white;
+            margin: 0;
+            display: unset;
+        }
+
+        .header {
+            position: relative;
+            top: 0;
+            width: 100vw;
+            height: 60px;
+            background-color: black;
+        }
+
+        .logueado {
+            color: white;
+            font-size: 15px;
+            text-align: right;
+            padding: 10px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            color: black;
+            font-size: 15px;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+    <!-- Latest compiled and minified JavaScript -->
+    
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#btnbuscar').click(function () {
+                var buscar = $('#txtDni').val();
+                console.log(buscar);
+                $.get("http://localhost:58783/api/Clients/GetByDni/"+ buscar, function (data, status) {
+                    console.log(data);
+                    $('#txtName').val(data.Name);
+                    $('#txtLastName').val(data.Lastname);
+                    $('#txtDom').val(data.Address);
+                    $('#txtFechaNacimiento').val(data.FechaNacimiento);
+                    $('#txtDni').val(data.Dni);
+                });
+            })
+        });
+    
+    
+        $(document).ready(function () {
+            $('#btnModificar').click(function () {
+                var Name = $('#txtName').val();
+                var LastName = $('#txtLastName').val();
+                var Address = $('#txtDom').val();
+                var Dni = $('#txtDni').val();
+                var FechaNacimiento = $('#txtFechaNacimiento').val();
+
+                function Cliente(Name, LastName, Address, Dni, FechaNacimiento) {
+                    this.Name = Name;
+                    this.LastName = LastName;
+                    this.Address = Address;
+                    this.Dni = Dni;
+                    this.FechaNacimiento = FechaNacimiento;
+                }
+
+                var cliente = new Cliente(Name, LastName, Address, Dni, FechaNacimiento);
+
+                $.post("http://localhost:58783/api/Clients/ModiFyClient",
+                    cliente,
+                    function (data, status) {
+                        swal({
+                            //title: 'Datos correctos',
+                            text: data,
+                            timer: 500000
+                        });
+                    })
+                $('#txtName').val('');
+                $('#txtLastName').val('');
+                $('#txtDni').val('');
+                $('#txtDom').val('');
+                $('#txtFechaNacimiento').val('');
+            })
+        })
+    </script>
+
+</head>
+<body>
+    <form id="form1">
+        <header class="header">
+            <div class="logueado">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Usuario:
+                <asp:Label ID="lblUser"  ForeColor="White"></asp:Label>
+            </div>
+        </header>
+        <div>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="Main.aspx">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        </a>
+                        <a class="navbar-brand">Bienvenidos</a>
+                        <a class="navbar-brand" href="Add.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Agregar Clientes</a>
+                        <a class="navbar-brand" href="List.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Listado de Clientes</a>
+                        <a class="navbar-brand" href="Search.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Buscar Cliente</a>
+                        <a class="navbar-brand" href="TouristPackage.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Paquete Turistico</a>
+                        <a class="navbar-brand" href="BookingAdd.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Contrataciones</a>
+                        <a class="navbar-brand" href="Login.html"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Salir</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <legend>Buscar Cliente</legend>
+                        <input  id="txtDni" name="txtDni" placeholder="Dni" class="form-control" required="" type="text">
+                        <!-- Button -->
+                        <br />
+                        <label class="control-label" for="btnBuscar"></label>
+                        <button type="button" id="btnbuscar" name="btnbuscar" class="btn btn-primary">Buscar</button>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <legend>Modificar Cliente</legend>
+                        <input  id="txtName" name="txtName" placeholder="Nombre" class="form-control" type="text">
+                        <input  id="txtLastName" name="txtLastName" placeholder="Apellido" class="form-control" type="text">
+                        <input  id="txtDni" name="txtDni" placeholder="Dni" class="form-control" type="text">
+                        <input  id="txtDom" name="txtDom" placeholder="Domicilio" class="form-control" type="text">
+                        <input id="txtFechaNacimiento" name="txtFechaNacimiento" placeholder="Fecha Nacimiento" class="form-control" type="text">
+                        <br />
+                        <button type="button" id="btnModificar" name="btnModificar" class="btn btn-primary">Modificar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <p class="text-center">
+                Developed by Luis Hoyos
+                <br>
+                Email:luchomdq10@gmail.com
+            </p>
+        </div>
+    </div>
+</body>
+</html>

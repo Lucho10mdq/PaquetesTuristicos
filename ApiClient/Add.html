@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style type="text/css">
+        body {
+            background-color: white;
+            margin: 0;
+            display: unset;
+        }
+
+        .header {
+            position: relative;
+            top: 0;
+            width: 100vw;
+            height: 60px;
+            background-color: black;
+        }
+
+        .logueado {
+            color: white;
+            font-size: 15px;
+            text-align: right;
+            padding: 10px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            color: black;
+            font-size: 15px;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+    <!-- Latest compiled and minified JavaScript -->
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#btnGuardar').click(function () {
+                var Name = $('#txtNombre').val();
+                var LastName = $('#txtApellido').val();
+                var Dni = $('#txtDni').val();
+                var Address = $('#txtDomicilio').val();
+                var FechaNacimiento = $('#txtFecha').val();
+                if ((Name == '') && (LastName == '') && (Dni == '') && (Address == '') && (FechaNacimiento == '')) {
+                    swal({
+                        title: 'Comprobacion de Campos',
+                        text: 'Ingrese todos los datos',
+                        timer: 500000
+                    });
+                }
+                else {
+                    function Cliente(Name, LastName, Dni, Address, FechaNacimiento) {
+                        this.Name = Name;
+                        this.LastName = LastName;
+                        this.Dni = Dni;
+                        this.Address = Address;
+                        this.FechaNacimiento = FechaNacimiento;
+                    }
+
+                    var cliente = new Cliente(Name, LastName, Dni, Address, FechaNacimiento);
+                    $.post("http://localhost:58783/api/Clients/AddClient", cliente,
+                    function (data, status) {
+                        swal({
+                            //title: 'Datos correctos',
+                            text: data,
+                            timer: 500000
+                        });
+                    });
+                    $('#txtNombre').val('');
+                    $('#txtApellido').val('');
+                    $('#txtDni').val('');
+                    $('#txtDomicilio').val('');
+                    $('#txtFecha').val('');
+                }
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <form id="form1">
+        <header class="header">
+            <div class="logueado">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Usuario:<asp:Label ID="lblUser" runat="server" ForeColor="White"></asp:Label>
+                &nbsp;
+            </div>
+        </header>
+        <div>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="Main.aspx">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        </a>
+                        <a class="navbar-brand">Bienvenidos</a>
+                        <a class="navbar-brand" href="Add.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Agregar Clientes</a>
+                        <a class="navbar-brand" href="List.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Listado de Clientes</a>
+                        <a class="navbar-brand" href="Search.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Buscar Cliente</a>
+                        <a class="navbar-brand" href="TouristPackage.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Paquete Turistico</a>
+                        <a class="navbar-brand" href="BookingAdd.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Contrataciones</a>
+                        <a class="navbar-brand" href="Login.html"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Salir</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <!-- Form Name -->
+                        <legend><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Agregar Cliente</legend>
+
+                        <!-- Text input-->
+
+                        <input  id="txtNombre" name="txtNombre" placeholder="Nombre" class="form-control input-md" required="" type="text">
+                        <br />
+                        <!-- Text input-->
+
+                        <input  id="txtApellido" name="txtApellido" placeholder="Apellido" class="form-control input-md" required="" type="text">
+                        <br />
+                        <!-- Text input-->
+
+                        <input  id="txtDni" name="txtDni" placeholder="Dni" class="form-control input-md" required="" type="text">
+                        <br />
+                        <!-- Text input-->
+
+                        <input  id="txtDomicilio" name="txtDomicilio" placeholder="Domicilio" class="form-control input-md" required="" type="text">
+                        <br />
+                        <!-- Text input-->
+
+                        <input  id="txtFecha" name="txtFecha" placeholder="Fecha de Nacimiento  / / " class="form-control input-md" required="" type="text">
+                        <br />
+                        <button type="button" id="btnGuardar" Text="Guardar" class="btn btn-danger">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <p class="text-center">
+                Developed by Luis Hoyos
+                <br>
+                Email:luchomdq10@gmail.com
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+
