@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ApiClient.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200",headers:"*",methods:"*")]
     [RoutePrefix("api/clients")]
     public class ClientController : ApiController
     {
@@ -24,15 +26,15 @@ namespace ApiClient.Controllers
         }
         [Route("AddClient")]
         [HttpPost]
-        public string AddClient(Client oCliente) { 
-            var msj = "No agrege";
-            var result = false;
-            result=cs.Add(oCliente);
-            if (result == true)
-            { msj = "Agrege con exito";
-                return msj;
+        public bool AddClient(Client oCliente) { 
+            var result = "No agrege";
+            var resultado = false;
+            resultado=cs.Add(oCliente);
+            if (resultado == true)
+            { result = "Agrege con exito";
+                return resultado;
             }
-            return msj;
+            return resultado;
         }
 
 
@@ -41,6 +43,14 @@ namespace ApiClient.Controllers
         public Client GetByDni(string dni)
         {
             var client= cs.GetByDni(dni);
+            return client;
+        }
+
+        [Route("GetById/{id}")]
+        [HttpGet]
+        public Client GetById(int id)
+        {
+            var client = cs.GetById(id);
             return client;
         }
 

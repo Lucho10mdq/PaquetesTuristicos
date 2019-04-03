@@ -9,7 +9,7 @@ namespace ApiClient.Service
 {
     interface IPackage
     {
-        void AddPackage(string description, DateTime checkOut, DateTime checkIn, int quantity, double import);
+        void AddPackage(TouristPackage oTourist);
         List<TouristPackage> GetPackage();
     }
 }

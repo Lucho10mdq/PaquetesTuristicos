@@ -11,9 +11,8 @@ namespace ApiClient.Service
     {
         private PackageRepository ListPackage = PackageRepository.GetInstance();
 
-        public void AddPackage(string description, DateTime checkOut, DateTime checkIn, int quantity, double import)
+        public void AddPackage(TouristPackage oTourist)
         {
-            TouristPackage oTourist = new TouristPackage(quantity, import, description, checkOut, checkIn);
             ListPackage.AddPackage(oTourist);
         }
 

@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ApiClient.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     [RoutePrefix("api/User")]
     public class UserController : ApiController
     {
@@ -16,9 +18,11 @@ namespace ApiClient.Controllers
 
         [Route("UserAdd")]
         [HttpPost]
-        public void UserAdd(User oUser)
+        public bool UserAdd(User oUser)
         {
-            cs.AddUser(oUser);
+            var result = false;
+            result=cs.AddUser(oUser);
+            return result;
         }
 
         [Route("GetUserByEmail")]

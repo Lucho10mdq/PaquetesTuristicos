@@ -100,6 +100,42 @@ namespace ApiClient.Repository
             return oClient;
         }
 
+        public Client GetById(int id)
+        {
+            Client oClient = null;
+            conexion.Open();
+            SqlCommand c = conexion.CreateCommand();
+            c.CommandType = CommandType.StoredProcedure;
+            c.CommandText = "Get_ClientById";
+
+            SqlParameter DniParameter = c.CreateParameter();
+            DniParameter.ParameterName = "@id";
+            DniParameter.SqlDbType = SqlDbType.VarChar;
+            DniParameter.Value = id;
+            c.Parameters.Add(DniParameter);
+
+
+            SqlDataReader dn = c.ExecuteReader();
+
+            while (dn.Read())
+            {
+                oClient = new Client();
+
+                oClient.Name = dn.GetString(1);
+                oClient.Lastname = dn.GetString(2);
+                oClient.Dni = dn.GetString(3);
+                oClient.Address = dn.GetString(4);
+                oClient.FechaNacimiento = dn.GetDateTime(5);
+
+                oClient.ClientId = dn.GetInt32(0);
+
+                oClient.ClientId = dn.GetInt32(0);
+            }
+            dn.Close();
+            conexion.Close();
+            return oClient;
+        }
+
         public int Modify(Client oCliente)
         {
             conexion.Open();

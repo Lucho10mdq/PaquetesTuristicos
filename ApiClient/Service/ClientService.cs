@@ -36,6 +36,12 @@ namespace ApiClient.Service
             return oClient = listClient.GetByDni(dni);
         }
 
+        public Client GetById(int id)
+        {
+            Client oClient = null;
+            return oClient = listClient.GetById(id);
+        }
+
         public int Modify(Client oCliente)
         {
             int resul;

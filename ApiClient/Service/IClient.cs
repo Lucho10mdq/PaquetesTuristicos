@@ -12,6 +12,7 @@ namespace ApiClient.Service
         bool Add(Client oClient);
         List<Client> GetAll();
         Client GetByDni(string dni);
+        Client GetById(int dni);
         int Modify(Client oClient);
     }
 }

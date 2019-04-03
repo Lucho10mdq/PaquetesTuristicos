@@ -42,3 +42,6 @@ c:\users\luis_\documents\visual studio 2015\Projects\ApiClient\ApiClient\bin\es\
 c:\users\luis_\documents\visual studio 2015\Projects\ApiClient\ApiClient\bin\es\System.Web.Http.WebHost.resources.dll
 c:\users\luis_\documents\visual studio 2015\Projects\ApiClient\ApiClient\obj\Debug\ApiClient.dll
 c:\users\luis_\documents\visual studio 2015\Projects\ApiClient\ApiClient\obj\Debug\ApiClient.pdb
+C:\Users\luis_\Documents\Visual Studio 2015\Projects\ApiClient\ApiClient\bin\System.Web.Cors.dll
+C:\Users\luis_\Documents\Visual Studio 2015\Projects\ApiClient\ApiClient\bin\System.Web.Http.Cors.dll
+C:\Users\luis_\Documents\Visual Studio 2015\Projects\ApiClient\ApiClient\bin\System.Web.Http.Cors.xml
